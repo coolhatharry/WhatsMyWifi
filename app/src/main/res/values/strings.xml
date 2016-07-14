@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WhatsMyWifi</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_wifi">Add Wifi</string>
+    <string name="wifi_password">Wifi Password</string>
+    <string name="wifi_name_ssid">Wifi Name (SSID)</string>
+    <string name="create">Create</string>
+
+    <string-array name="wifi_type">
+        <item>WEP</item>
+        <item>WPA/WPA2</item>
+        <item>No Encryption</item>
+    </string-array>
+
+</resources>
