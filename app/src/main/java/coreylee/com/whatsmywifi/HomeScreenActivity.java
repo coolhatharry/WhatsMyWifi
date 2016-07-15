@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * The main screen for the app
  */
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity {
     private Intent mAddWifiIntent;
     private List<Wifi> mWifiList = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -90,6 +90,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private void prepareWifiData() {
 
+        //TODO obtain data
         Wifi newWifi = new Wifi("cool", "pass", WifiType.WPA2);
         mWifiList.add(newWifi);
 

@@ -70,7 +70,20 @@ public class AddWifiActivity extends AppCompatActivity {
      *
      */
     private void createWifi() {
+
+        storeWifiData();
+
+        //TODO
+//        generateQRCode();
+
         //TODO
         this.finish();//Replace
+    }
+
+    /**
+     *
+     */
+    private void storeWifiData() {
+
     }
 }
