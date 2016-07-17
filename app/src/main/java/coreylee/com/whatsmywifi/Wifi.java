@@ -9,6 +9,10 @@ public class Wifi {
     private String wifiPassword;
     private WifiType wifiType;
 
+    public Wifi() {
+
+    }
+
     public Wifi(String wifiName, String wifiPassword, WifiType wifiType) {
         this.wifiName = wifiName;
         this.wifiPassword = wifiPassword;

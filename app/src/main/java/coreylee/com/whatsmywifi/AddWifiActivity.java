@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -84,6 +85,17 @@ public class AddWifiActivity extends AppCompatActivity {
      *
      */
     private void storeWifiData() {
+        Wifi wifi = new Wifi();
+
+        wifi.setWifiName(mWifiName.getText().toString());
+        wifi.setWifiPassword(mWifiPassword.getText().toString());
+        wifi.setWifiType(WifiType.valueOf(mWifiType.getSelectedItem().toString()));
+
+        WifiDBHelper wifiDBHelper = new WifiDBHelper(this);
+
+        Log.d("DB ROWS", "" + wifiDBHelper.getNumberOfRows());
+
+        wifiDBHelper.insertWifi(wifi);
 
     }
 }

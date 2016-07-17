@@ -15,16 +15,14 @@ public class WifiDBHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "WifiData.db";
     private static final String TEXT_TYPE = " TEXT";
-    private static final String COMMA_SEP = ",";
+    private static final String COMMA_SEP = ", ";
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + WifiReaderContract.WifiEntry.TABLE_NAME + " (" +
-                    WifiReaderContract.WifiEntry._ID + " INTEGER PRIMARY KEY," +
-                    WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_ID + TEXT_TYPE + COMMA_SEP +
+            "CREATE TABLE " + WifiReaderContract.WifiEntry.TABLE_NAME + "(" +
+                    WifiReaderContract.WifiEntry._ID + " INTEGER PRIMARY KEY, " +
                     WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_NAME + TEXT_TYPE + COMMA_SEP +
                     WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_PASSWORD + TEXT_TYPE + COMMA_SEP +
-                    WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_TYPE + TEXT_TYPE + COMMA_SEP +
-                    " )";
+                    WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_TYPE + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + WifiReaderContract.WifiEntry.TABLE_NAME;
@@ -69,7 +67,7 @@ public class WifiDBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.update(WifiReaderContract.WifiEntry.TABLE_NAME,
                 contentValues,
-                WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_ID + " = ? ",
+                WifiReaderContract.WifiEntry._ID + " = ? ",
                 new String[]{Integer.toString(id)});
 
         return true;
@@ -78,14 +76,14 @@ public class WifiDBHelper extends SQLiteOpenHelper {
     public Integer deleteWifi(Integer id) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         return sqLiteDatabase.delete(WifiReaderContract.WifiEntry.TABLE_NAME,
-                WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_ID + " = ? ",
+                WifiReaderContract.WifiEntry._ID + " = ? ",
                 new String[]{Integer.toString(id)});
     }
 
     public Cursor getWifi(int id) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         return sqLiteDatabase.rawQuery("SELECT * FROM " + WifiReaderContract.WifiEntry.TABLE_NAME +
-                        " WHERE " + WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_ID + "=?",
+                        " WHERE " + WifiReaderContract.WifiEntry._ID + "=?",
                 new String[]{Integer.toString(id)});
     }
 
