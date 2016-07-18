@@ -1,9 +1,10 @@
 package coreylee.com.whatsmywifi;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,21 +13,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 /**
  * The main screen for the app
  */
 public class HomeScreenActivity extends AppCompatActivity {
     private Intent mAddWifiIntent;
-//    private List<Wifi> mWifiList = new ArrayList<>();
     private WifiDBHelper mWifiDBHelper;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private WifiAdapter mWifiAdapter;
-
+    private PermissionUtil mPermissionUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mAddWifiIntent = new Intent(new Intent(this, AddWifiActivity.class));
+
+        mPermissionUtil = new PermissionUtil(this, this.findViewById(R.id.home_screen_view));
 
         setupAddWifiButton();
 
@@ -62,12 +64,51 @@ public class HomeScreenActivity extends AppCompatActivity {
             this.prepareWifiData();
 
             return true;
+        } else if (id == R.id.action_scan_qr) {
+
+            mPermissionUtil.requestCameraPermissions();
+
+            if (mPermissionUtil.isCameraPermissionGranted()) {
+                scanQRCode();
+            }
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void setupAddWifiButton() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == PermissionUtil.REQUEST_CAMERA) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                scanQRCode();
+
+            } else {
+                Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+
+    }
+
+    /**
+     * This will handle the scanning of the QR code using the devices camera
+     */
+    private void scanQRCode() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setOrientationLocked(false);
+        integrator.initiateScan();
+    }
+
+    /**
+     * Adds a floating add button which will trigger the add wifi activity if selected
+     */
+    private void setupAddWifiButton() {
         FloatingActionButton addWifiButton = (FloatingActionButton) findViewById(R.id.add_wifi);
         addWifiButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +120,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays a list of added wifi settings to the user
+     */
     private void setupRecyclerView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -93,6 +137,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mWifiAdapter);
     }
 
+    /**
+     * Obtains the most recent wifi data from the database and adds it to the adapter
+     */
     private void prepareWifiData() {
 
         mWifiAdapter.swapCursor(mWifiDBHelper.getAllWifis());
