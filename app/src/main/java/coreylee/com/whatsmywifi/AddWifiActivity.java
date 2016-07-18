@@ -92,9 +92,7 @@ public class AddWifiActivity extends AppCompatActivity {
         wifi.setWifiType(WifiType.valueOf(mWifiType.getSelectedItem().toString()));
 
         WifiDBHelper wifiDBHelper = new WifiDBHelper(this);
-
-        Log.d("DB ROWS", "" + wifiDBHelper.getNumberOfRows());
-
+        
         wifiDBHelper.insertWifi(wifi);
 
     }

@@ -8,8 +8,8 @@
 
     <string-array name="wifi_type">
         <item>WEP</item>
-        <item>WPA/WPA2</item>
-        <item>No Encryption</item>
+        <item>WPA2</item>
+        <item>NONE</item>
     </string-array>
 
 </resources>

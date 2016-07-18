@@ -21,7 +21,8 @@ import java.util.List;
  */
 public class HomeScreenActivity extends AppCompatActivity {
     private Intent mAddWifiIntent;
-    private List<Wifi> mWifiList = new ArrayList<>();
+//    private List<Wifi> mWifiList = new ArrayList<>();
+    private WifiDBHelper mWifiDBHelper;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private WifiAdapter mWifiAdapter;
@@ -58,6 +59,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            this.prepareWifiData();
+
             return true;
         }
 
@@ -79,7 +82,9 @@ public class HomeScreenActivity extends AppCompatActivity {
     private void setupRecyclerView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mWifiAdapter = new WifiAdapter(mWifiList);
+
+        mWifiDBHelper = new WifiDBHelper(this);
+        mWifiAdapter = new WifiAdapter(this, mWifiDBHelper.getAllWifis());
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -90,14 +95,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     private void prepareWifiData() {
 
-        //TODO obtain data
-        Wifi newWifi = new Wifi("cool", "pass", WifiType.WPA2);
-        mWifiList.add(newWifi);
-
-        newWifi = new Wifi("WIFI TITLE", "password", WifiType.WEP);
-        mWifiList.add(newWifi);
-
-        mWifiAdapter.notifyDataSetChanged();
+        mWifiAdapter.swapCursor(mWifiDBHelper.getAllWifis());
 
     }
 }
