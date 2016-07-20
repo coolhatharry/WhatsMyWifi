@@ -10,11 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/**
+ * TODO
+ */
 public class AddWifiActivity extends AppCompatActivity {
 
     private EditText mWifiName;
     private EditText mWifiPassword;
-    private Spinner mWifiType;
     private AppCompatButton mCreateButton;
     private Intent mQRIntent;
 
@@ -33,28 +35,13 @@ public class AddWifiActivity extends AppCompatActivity {
     private void setupUI() {
         mWifiName = (EditText) findViewById(R.id.input_wifi_name);
         mWifiPassword = (EditText) findViewById(R.id.input_wifi_password);
-        mWifiType = (Spinner) findViewById(R.id.spinner_wifi_type);
         mCreateButton = (AppCompatButton) findViewById(R.id.button_create_wifi);
 
-        setupSpinnerAdapter();
         setCreateButtonListener();
     }
 
     /**
-     * Adds an array adapter to the spinner widget
-     */
-    private void setupSpinnerAdapter() {
-        ArrayAdapter<CharSequence> adapterWifiType = ArrayAdapter.createFromResource(this,
-                R.array.wifi_type, android.R.layout.simple_spinner_item);
-
-        adapterWifiType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Add the wifi type adapter to the spinner
-        mWifiType.setAdapter(adapterWifiType);
-    }
-
-    /**
-     *
+     * TODO
      */
     private void setCreateButtonListener() {
 
@@ -68,7 +55,7 @@ public class AddWifiActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * TODO
      */
     private void createWifi() {
 
@@ -82,14 +69,13 @@ public class AddWifiActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * TODO
      */
     private void storeWifiData() {
         Wifi wifi = new Wifi();
 
         wifi.setWifiName(mWifiName.getText().toString());
         wifi.setWifiPassword(mWifiPassword.getText().toString());
-        wifi.setWifiType(WifiType.valueOf(mWifiType.getSelectedItem().toString()));
 
         WifiDBHelper wifiDBHelper = new WifiDBHelper(this);
 

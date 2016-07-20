@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
+ * TODO
  * Created by coreylee on 16-07-14.
  */
 public class WifiDBHelper extends SQLiteOpenHelper {
@@ -21,8 +22,7 @@ public class WifiDBHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + WifiReaderContract.WifiEntry.TABLE_NAME + "(" +
                     WifiReaderContract.WifiEntry._ID + " INTEGER PRIMARY KEY, " +
                     WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_NAME + TEXT_TYPE + COMMA_SEP +
-                    WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_PASSWORD + TEXT_TYPE + COMMA_SEP +
-                    WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_TYPE + TEXT_TYPE + ")";
+                    WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_PASSWORD + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + WifiReaderContract.WifiEntry.TABLE_NAME;
@@ -50,7 +50,6 @@ public class WifiDBHelper extends SQLiteOpenHelper {
 
         contentValues.put(WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_NAME, wifi.getWifiName());
         contentValues.put(WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_PASSWORD, wifi.getWifiPassword());
-        contentValues.put(WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_TYPE, wifi.getWifiType().toString());
 
         sqLiteDatabase.insert(WifiReaderContract.WifiEntry.TABLE_NAME, null, contentValues);
 
@@ -63,7 +62,6 @@ public class WifiDBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_NAME, wifi.getWifiName());
         contentValues.put(WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_PASSWORD, wifi.getWifiPassword());
-        contentValues.put(WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_TYPE, wifi.getWifiType().toString());
 
         sqLiteDatabase.update(WifiReaderContract.WifiEntry.TABLE_NAME,
                 contentValues,

@@ -8,13 +8,6 @@
     <string name="action_scan_qr">Scan QR</string>
     <string name="ok">OK</string>
 
-    <string-array name="wifi_type">
-        <item>WEP</item>
-        <item>WPA2</item>
-        <item>NONE</item>
-    </string-array>
-
-
     <!-- Permissions -->
     <string name="permission_storage_rationale">Requires Storage permission to allow save QR codes</string>
     <string name="permission_camera_rationale">Requires Camera permission to scan QR</string>
