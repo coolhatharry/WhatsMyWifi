@@ -1,9 +1,11 @@
 package coreylee.com.whatsmywifi;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -71,6 +73,7 @@ public class AddWifiActivity extends AppCompatActivity {
      * Obtains the views of the UI from the activity add wifi layout
      */
     private void setupUI() {
+
         mWifiName = (EditText) findViewById(R.id.input_wifi_name);
         mWifiPassword = (EditText) findViewById(R.id.input_wifi_password);
         mCreateButton = (AppCompatButton) findViewById(R.id.button_save_and_generate);
@@ -87,6 +90,7 @@ public class AddWifiActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 storeAndGenerateWifi();
             }
         });
@@ -101,16 +105,40 @@ public class AddWifiActivity extends AppCompatActivity {
 
         if (mPermissionUtil.isStoragePermissionGranted()) {
 
-            storeWifiData();
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Generating QR Code...");
+            progressDialog.show();
 
-            generateQRCode();
+            Thread mThread = new Thread() {
+                @Override
+                public void run() {
+                    storeWifiData();
 
-            mQRViewIntent = new Intent(new Intent(this, QRViewActivity.class));
-            mQRViewIntent.putExtra("WIFI_NAME", mWifi.getWifiName());
-            mQRViewIntent.putExtra("WIFI_PASSWORD", mWifi.getWifiPassword());
-            this.startActivity(mQRViewIntent);
+                    generateQRCode();
+
+                    progressDialog.dismiss();
+
+                    startNextActivity();
+
+                }
+            };
+
+            mThread.start();
 
         }
+
+    }
+
+    /**
+     * Obtain the intent  and start the QR view activity
+     */
+    private void startNextActivity() {
+        mQRViewIntent = new Intent(new Intent(this, QRViewActivity.class));
+        mQRViewIntent.putExtra("WIFI_NAME", mWifi.getWifiName());
+        mQRViewIntent.putExtra("WIFI_PASSWORD", mWifi.getWifiPassword());
+
+        this.startActivity(mQRViewIntent);
 
     }
 
@@ -133,7 +161,8 @@ public class AddWifiActivity extends AppCompatActivity {
      * TODO
      */
     private void generateQRCode() {
-        String contents = "WIFI:S:" + mWifi.getWifiName() + ";P:" + mWifi.getWifiPassword() + ";;";
+        String contents = "[[[WIFI_NAME]]]=" + mWifi.getWifiName() +
+                "[[[WIFI_PASSWORD]]]=" + mWifi.getWifiPassword();
 
         Log.d("CONTENT", contents);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -161,17 +190,20 @@ public class AddWifiActivity extends AppCompatActivity {
 
     /**
      * TODO
+     *
      * @param bitmap
      */
     private void saveBitmapToDevice(Bitmap bitmap) {
         String path = Environment.getExternalStorageDirectory().toString();
-        File qrFile = new File(path, mWifi.getWifiName() + ".png"); // the File to save to
+        File qrFile = new File(path, mWifi.getWifiName() + ".jpg"); // the File to save to
 
+        Log.d("PATH", qrFile.toString());
         FileOutputStream fileOutputStream = null;
 
         try {
             fileOutputStream = new FileOutputStream(qrFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,8 +215,8 @@ public class AddWifiActivity extends AppCompatActivity {
                     // Can now be viewed in the photo gallery
                     MediaStore.Images.Media.insertImage(getContentResolver(),
                             qrFile.getAbsolutePath(),
-                            qrFile.getName(),
-                            qrFile.getName());
+                            mWifi.getWifiName(),
+                            mWifi.getWifiName() + " " + mWifi.getWifiPassword());
                 }
             } catch (IOException e) {
                 e.printStackTrace();

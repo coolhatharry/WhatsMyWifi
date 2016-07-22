@@ -26,6 +26,7 @@ public class QRViewActivity extends AppCompatActivity {
     private ImageView mQRImageView;
     private EditText mEditWifiName;
     private EditText mEditWifiPassword;
+    private File mQRImageFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,9 @@ public class QRViewActivity extends AppCompatActivity {
 
             //TODO
             // Remove image from device
+            if (!removeImageFromDevice()) {
+                Toast.makeText(this, "Error " + mWifiName, Toast.LENGTH_LONG).show();
+            }
 
             Toast.makeText(this, "Deleted " + mWifiName, Toast.LENGTH_LONG).show();
 
@@ -72,6 +76,10 @@ public class QRViewActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean removeImageFromDevice() {
+        return mQRImageFile.delete();
     }
 
     /**
@@ -97,10 +105,10 @@ public class QRViewActivity extends AppCompatActivity {
      */
     private void obtainImage() {
         String path = Environment.getExternalStorageDirectory().toString();
-        File qrFile = new File(path, mWifiName + ".png"); // the File to save to
+        mQRImageFile = new File(path, mWifiName + ".jpg"); // the File to save to
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(qrFile.getAbsolutePath(), bmOptions);
+        Bitmap bitmap = BitmapFactory.decodeFile(mQRImageFile.getAbsolutePath(), bmOptions);
 
         mQRImageView.setImageBitmap(bitmap);
 

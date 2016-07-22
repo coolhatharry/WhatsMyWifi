@@ -178,7 +178,7 @@ public class HomeScreenActivity extends AppCompatActivity {
      */
     private Wifi extractNetworkInformation(String contents) {
         Wifi wifi = new Wifi();
-        Pattern pattern = Pattern.compile("^WIFI:S:(.*);P:(.*);;$"); //TODO
+        Pattern pattern = Pattern.compile("^\\[\\[\\[WIFI_NAME]]]=(.*)\\[\\[\\[WIFI_PASSWORD]]]=(.*)$"); //TODO
         Matcher matcher = pattern.matcher(contents);
 
         if (matcher.find()) {
