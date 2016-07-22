@@ -71,19 +71,21 @@ public class WifiDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteWifi(Integer id) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        return sqLiteDatabase.delete(WifiReaderContract.WifiEntry.TABLE_NAME,
-                WifiReaderContract.WifiEntry._ID + " = ? ",
-                new String[]{Integer.toString(id)});
-    }
-
-    public boolean deleteWifiTest(String wifiName) {
+    public void deleteWifi(String wifiName) {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
-        return sqLiteDatabase.delete(WifiReaderContract.WifiEntry.TABLE_NAME,
-                WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_NAME + "=" + wifiName, null) > 0;
+        try {
+            sqLiteDatabase.delete(WifiReaderContract.WifiEntry.TABLE_NAME,
+                    WifiReaderContract.WifiEntry.COLUMN_NAME_WIFI_NAME + " = ?",
+                    new String[]{ wifiName });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sqLiteDatabase.close();
+        }
+
     }
 
     public Cursor getWifiCursor(int id) {

@@ -107,10 +107,9 @@ public class AddWifiActivity extends AppCompatActivity {
 
             mQRViewIntent = new Intent(new Intent(this, QRViewActivity.class));
             mQRViewIntent.putExtra("WIFI_NAME", mWifi.getWifiName());
+            mQRViewIntent.putExtra("WIFI_PASSWORD", mWifi.getWifiPassword());
             this.startActivity(mQRViewIntent);
 
-            //TODO
-            this.finish();
         }
 
     }

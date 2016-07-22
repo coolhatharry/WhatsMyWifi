@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * TODO
@@ -81,7 +79,7 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.MyViewHolder> 
     }
 
     /**
-     * TODO
+     * A view holder to contain the attributes for each item in the recycler view
      */
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView wifiName;
@@ -102,7 +100,11 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.MyViewHolder> 
             Intent intent = new Intent(view.getContext(), QRViewActivity.class);
 
             String wifiString = wifiName.getText().toString();
+            String wifiPasswordString = wifiPassword.getText().toString();
+
             intent.putExtra("WIFI_NAME", wifiString);
+            intent.putExtra("WIFI_PASSWORD", wifiPasswordString);
+
             view.getContext().startActivity(intent);
 
 

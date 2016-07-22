@@ -31,9 +31,9 @@
             android:label="@string/add_wifi"
             android:parentActivityName=".HomeScreenActivity">
         </activity>
-        <activity android:name=".QRViewActivity"
-                  android:parentActivityName=".HomeScreenActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".QRViewActivity"
+            android:parentActivityName=".HomeScreenActivity">
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

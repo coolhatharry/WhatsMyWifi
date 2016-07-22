@@ -15,5 +15,6 @@
     <string name="qr_code">QR Code</string>
     <string name="save">Save</string>
     <string name="save_and_generate">Save And Generate</string>
+    <string name="delete">Delete</string>
 
 </resources>
