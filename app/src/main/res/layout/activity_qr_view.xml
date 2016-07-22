@@ -19,6 +19,7 @@
             android:id="@+id/wifi_view_qr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/layout_padding"
             android:layout_marginTop="@dimen/layout_padding"
             android:contentDescription="@string/qr_code"/>

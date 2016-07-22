@@ -139,7 +139,7 @@ public class AddWifiActivity extends AppCompatActivity {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
         try {
-            BitMatrix bitMatrix = qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500, null);
+            BitMatrix bitMatrix = qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 660, 660, null);
             int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();
 
@@ -160,6 +160,7 @@ public class AddWifiActivity extends AppCompatActivity {
     }
 
     /**
+     * TODO
      * @param bitmap
      */
     private void saveBitmapToDevice(Bitmap bitmap) {
