@@ -16,5 +16,6 @@
     <string name="save">Save</string>
     <string name="save_and_generate">Save And Generate</string>
     <string name="delete">Delete</string>
+    <string name="share">Share</string>
 
 </resources>

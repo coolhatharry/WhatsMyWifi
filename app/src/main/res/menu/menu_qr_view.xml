@@ -5,9 +5,17 @@
       tools:context=".QRViewActivity">
 
     <item
+        android:id="@+id/action_share"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        app:showAsAction="ifRoom"
+        android:title="@string/share"/>
+
+    <item
         android:id="@+id/action_delete"
-        android:orderInCategory="100"
         android:icon="@drawable/ic_delete_white_24dp"
+        android:orderInCategory="2"
         android:title="@string/delete"
         app:showAsAction="ifRoom"/>
 

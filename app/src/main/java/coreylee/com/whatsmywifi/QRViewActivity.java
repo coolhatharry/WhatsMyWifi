@@ -1,7 +1,9 @@
 package coreylee.com.whatsmywifi;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import java.io.File;
@@ -27,6 +30,8 @@ public class QRViewActivity extends AppCompatActivity {
     private EditText mEditWifiName;
     private EditText mEditWifiPassword;
     private File mQRImageFile;
+    private ShareActionProvider mShareActionProvider;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,7 @@ public class QRViewActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_qr_view, menu);
+
         return true;
     }
 
@@ -73,6 +79,12 @@ public class QRViewActivity extends AppCompatActivity {
             this.finish();
 
             return true;
+        } else if (id == R.id.action_share) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(mQRImageFile));
+            shareIntent.setType("image/jpeg");
+            startActivity(Intent.createChooser(shareIntent, "Share Wifi QR to..."));
         }
 
         return super.onOptionsItemSelected(item);
@@ -112,5 +124,11 @@ public class QRViewActivity extends AppCompatActivity {
 
         mQRImageView.setImageBitmap(bitmap);
 
+    }
+
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 }
