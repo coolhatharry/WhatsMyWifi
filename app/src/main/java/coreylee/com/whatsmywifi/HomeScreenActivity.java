@@ -178,7 +178,7 @@ public class HomeScreenActivity extends AppCompatActivity {
      */
     private Wifi extractNetworkInformation(String contents) {
         Wifi wifi = new Wifi();
-        Pattern pattern = Pattern.compile("^\\[\\[\\[WIFI_NAME]]]=(.*)\\[\\[\\[WIFI_PASSWORD]]]=(.*)$"); //TODO
+        Pattern pattern = Pattern.compile("^\\[\\[\\[WIFI_NAME]]]=(.*)\\[\\[\\[WIFI_PASSWORD]]]=(.*)$");
         Matcher matcher = pattern.matcher(contents);
 
         if (matcher.find()) {
@@ -215,8 +215,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(mAddWifiIntent);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
     }

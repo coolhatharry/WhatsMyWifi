@@ -3,7 +3,8 @@ package coreylee.com.whatsmywifi;
 import android.provider.BaseColumns;
 
 /**
- * TODO
+ * Can be used in other classes to obtain SQL database information.
+ * 
  * Created by coreylee on 16-07-14.
  */
 public final class WifiReaderContract {

@@ -68,7 +68,6 @@ public class QRViewActivity extends AppCompatActivity {
             WifiDBHelper wifiDBHelper = new WifiDBHelper(this);
             wifiDBHelper.deleteWifi(mWifiName);
 
-            //TODO
             // Remove image from device
             if (!removeImageFromDevice()) {
                 Toast.makeText(this, "Error " + mWifiName, Toast.LENGTH_LONG).show();
@@ -79,17 +78,23 @@ public class QRViewActivity extends AppCompatActivity {
             this.finish();
 
             return true;
+
         } else if (id == R.id.action_share) {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(mQRImageFile));
             shareIntent.setType("image/jpeg");
-            startActivity(Intent.createChooser(shareIntent, "Share Wifi QR to..."));
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_wifi_qr)));
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Find the image in the path and remove it from the device
+     *
+     * @return a boolean if the file was removed without incident
+     */
     private boolean removeImageFromDevice() {
         return mQRImageFile.delete();
     }
@@ -126,9 +131,4 @@ public class QRViewActivity extends AppCompatActivity {
 
     }
 
-    private void setShareIntent(Intent shareIntent) {
-        if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(shareIntent);
-        }
-    }
 }

@@ -11,7 +11,9 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * TODO
+ * The wifi adapter syunchronises the recycler view to make sure the data displayed is the
+ * most recent and correct data
+ *
  * Created by coreylee on 16-07-13.
  */
 public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.MyViewHolder> {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -97,36 +96,35 @@ public class AddWifiActivity extends AppCompatActivity {
     }
 
     /**
-     * TODO
+     * Store the wifi data into the database and generates the qr code based on the wifi specs
      */
     private void storeAndGenerateWifi() {
 
+        // Ask for permission to write to external memory
         mPermissionUtil.requestStoragePermissions();
 
-        if (mPermissionUtil.isStoragePermissionGranted()) {
+        // Display a loading spinner to the user
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Generating QR Code...");
+        progressDialog.show();
 
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Generating QR Code...");
-            progressDialog.show();
+        Thread mThread = new Thread() {
+            @Override
+            public void run() {
+                storeWifiData();
 
-            Thread mThread = new Thread() {
-                @Override
-                public void run() {
-                    storeWifiData();
+                generateQRCode();
 
-                    generateQRCode();
+                progressDialog.dismiss();
 
-                    progressDialog.dismiss();
+                startNextActivity();
 
-                    startNextActivity();
+            }
+        };
 
-                }
-            };
+        mThread.start();
 
-            mThread.start();
-
-        }
 
     }
 
@@ -158,7 +156,7 @@ public class AddWifiActivity extends AppCompatActivity {
     }
 
     /**
-     * TODO
+     * Generates the qr code based on the specs of the wifi data
      */
     private void generateQRCode() {
         String contents = "[[[WIFI_NAME]]]=" + mWifi.getWifiName() +
@@ -189,9 +187,9 @@ public class AddWifiActivity extends AppCompatActivity {
     }
 
     /**
-     * TODO
+     * Converts the bitmap to an image file and stores it in the device
      *
-     * @param bitmap
+     * @param bitmap The QR bitmap to compress into an image
      */
     private void saveBitmapToDevice(Bitmap bitmap) {
         String path = Environment.getExternalStorageDirectory().toString();

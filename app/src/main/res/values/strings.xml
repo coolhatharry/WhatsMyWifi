@@ -17,5 +17,6 @@
     <string name="save_and_generate">Save And Generate</string>
     <string name="delete">Delete</string>
     <string name="share">Share</string>
+    <string name="share_wifi_qr">Share Wifi QR to...</string>
 
 </resources>

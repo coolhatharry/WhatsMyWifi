@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * TODO
+ * The Database helper allows the use of SQL and its functions in a simple class used to store,
+ * retrieve and delete items from the SQL database easily.
+ *
  * Created by coreylee on 16-07-14.
  */
 public class WifiDBHelper extends SQLiteOpenHelper {
