@@ -12,5 +12,8 @@
     <string name="permission_storage_rationale">Requires Storage permission to allow save QR codes</string>
     <string name="permission_camera_rationale">Requires Camera permission to scan QR</string>
     <string name="permission_denied">Permission was denied</string>
+    <string name="qr_code">QR Code</string>
+    <string name="save">Save</string>
+    <string name="save_and_generate">Save And Generate</string>
 
 </resources>

@@ -1,13 +1,16 @@
 package coreylee.com.whatsmywifi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * TODO
@@ -77,16 +80,34 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.MyViewHolder> 
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * TODO
+     */
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView wifiName;
         public TextView wifiPassword;
-        public TextView wifiType;
 
         public MyViewHolder(View view) {
             super(view);
 
             wifiName = (TextView) view.findViewById(R.id.wifi_list_name);
             wifiPassword = (TextView) view.findViewById(R.id.wifi_list_password);
+
+            view.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), QRViewActivity.class);
+
+            String wifiString = wifiName.getText().toString();
+            intent.putExtra("WIFI_NAME", wifiString);
+            view.getContext().startActivity(intent);
+
+
         }
     }
+
+
 }

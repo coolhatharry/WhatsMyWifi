@@ -2,11 +2,13 @@ package coreylee.com.whatsmywifi;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -126,6 +128,19 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Refresh the recycler view to display the newest content
+        this.prepareWifiData();
+    }
+
+    /**
+     * Connect to the specified wifi from the QR code contents
+     *
+     * @param contents The contents of the QR Code scanned
+     */
     private void connectToNetwork(String contents) {
 
         Wifi wifiNetwork = extractNetworkInformation(contents);
@@ -157,9 +172,15 @@ public class HomeScreenActivity extends AppCompatActivity {
         wifiManager.reconnect();
     }
 
+    /**
+     * Extract the contents of the QR code and return Wifi
+     *
+     * @param contents QR code contents containing the SSID and Password
+     * @return A Wifi object containing the QR code info
+     */
     private Wifi extractNetworkInformation(String contents) {
         Wifi wifi = new Wifi();
-        Pattern pattern = Pattern.compile("^WIFI:S:(.*);P:(.*);;$");
+        Pattern pattern = Pattern.compile("^WIFI:S:(.*);P:(.*);;$"); //TODO
         Matcher matcher = pattern.matcher(contents);
 
         if (matcher.find()) {
@@ -217,6 +238,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         mRecyclerView.setAdapter(mWifiAdapter);
+
     }
 
     /**
